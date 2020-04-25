@@ -28,7 +28,9 @@ controlChars = {
 
 def main():
     global words
-    winterKey = pyperclip.paste().split()
+    fromClipboard = pyperclip.paste()
+    print(fromClipboard)
+    winterKey = fromClipboard.split()
     words = loadWords()
     parseWinterKey(winterKey)
 
@@ -45,6 +47,7 @@ def parseWinterKey(winterKey):
         generatedItem = parseWinterKeyItem(winterKeyItem)
         generated.append(generatedItem)
     winterPassword = " ".join(generated)
+    pyperclip.copy(winterPasswordv)
     print(winterPassword)
 
 
