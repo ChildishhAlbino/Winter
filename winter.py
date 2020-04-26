@@ -27,6 +27,8 @@ controlChars = {
 
 def main(clipboardContext=None):
     global words
+    fromClipboard = (
+        clipboardContext if clipboardContext else pyperclip.paste()).strip()
     if(matchRegex(fromClipboard, winterKeyRegex)):
         winterKey = fromClipboard.split()
         words = loadWords()
@@ -60,6 +62,7 @@ def parseWinterKey(winterKey):
 def getRandonWord(startingLetter=None, length=None):
     global words
     filtered = []
+    potException = None
     if (startingLetter):
         cacheKey = "startsWith%s" % (startingLetter)
         filtered = None
@@ -81,6 +84,11 @@ def getRandonWord(startingLetter=None, length=None):
             filteredCache[cacheKey] = filtered
         potException = Exception(
             "There were no words in the dictionary of length %s" % (length))
+    chosenWord = None
+    try:
+        chosenWord = random.choice(filtered)
+    except:
+        raise potException
     if (startingLetter) and (startingLetter.isupper()):
         chosenWord = chosenWord.capitalize()
     return chosenWord
@@ -90,7 +98,12 @@ def parseWinterKeyItem(winterKeyItem):
     generated = ""
     if (winterKeyItem.isalpha()):
         # Letter, -> generate word
-        generated = getRandonWord(startingLetter=winterKeyItem[0])
+        try:
+            generated = getRandonWord(startingLetter=winterKeyItem[0])
+        except Exception as e:
+            print(e)
+            input("Press Control/Command + C to close. ")
+            exit("Buh baii")
     elif (winterKeyItem[0:1] in controlChars.keys()):
         # Wildcard, -> generate word
         generated = controlChars[winterKeyItem[0:1]](winterKeyItem)
