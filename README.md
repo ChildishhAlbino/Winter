@@ -1,6 +1,6 @@
 # Winter
 
-Command line password generator.
+(Proof of Concept) Command line password generator.
 
 ## Concept
 
@@ -24,11 +24,19 @@ You type a generation key string following the below rules and Winter will gener
 
 ## Usage
 
-To generate a password write a string like below:
+* Install `pyperclip` via `pip install pyperclip`.
+* Type out a string following the rules e.g `### ???? l p`
+* Copy it to the clipboard.
+* Run `python winter.py`.
+* Paste your result. e.g. `425 pond luka pineapple`
+
+## Examples
+
+For the below string:
 
 `a b c d`
 
-This would generate a password of four random words starting with the letter a, b, c, and d.
+Winter would generate a password of four random words starting with the letter a, b, c, and then finally d.
 i.e:
 
 `apple Barbara courtney dixon`
