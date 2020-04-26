@@ -23,9 +23,9 @@ controlChars = {
 }
 
 
-def main():
+def main(clipboardContext=None):
     global words
-    fromClipboard = pyperclip.paste()
+    fromClipboard = clipboardContext if clipboardContext else pyperclip.paste()
     print(fromClipboard)
     winterKey = fromClipboard.split()
     words = loadWords()
