@@ -1,9 +1,9 @@
 import pyperclip
 import random
 import json
-
+from re import compile
 words = []
-winterKeyRegex = "/^([A-Za-z]{1}|[#]+|[\?]+)(\s{1}([A-Za-z]{1}|[#]+|[\?]+))*$/"
+winterKeyRegex = "^([A-Za-z]{1}|[#]+|[\?]+)(\s{1}([A-Za-z]{1}|[#]+|[\?]+))*$"
 
 
 def generateLetterWildcard(winterKeyItem):
@@ -26,17 +26,24 @@ controlChars = {
 
 def main(clipboardContext=None):
     global words
-    fromClipboard = clipboardContext if clipboardContext else pyperclip.paste()
-    print(fromClipboard)
-    winterKey = fromClipboard.split()
-    words = loadWords()
-    parseWinterKey(winterKey)
+    if(matchRegex(fromClipboard, winterKeyRegex)):
+        winterKey = fromClipboard.split()
+        words = loadWords()
+        parseWinterKey(winterKey)
+    else:
+        print("Sorry, that's not a valid winterkey.")
 
 
 def loadWords():
     with open("./words.json") as f:
         words = json.load(f)
     return words
+
+
+def matchRegex(inputString, pattern):
+    matchPattern = compile(pattern)
+    res = matchPattern.match(inputString)
+    return res
 
 
 def parseWinterKey(winterKey):
