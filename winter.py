@@ -4,9 +4,6 @@ import json
 
 words = []
 
-# a b c d
-# w w w W
-
 
 def generateLetterWildcard(winterKeyItem):
     generated = getRandonWord(length=len(winterKeyItem))
@@ -79,5 +76,5 @@ def parseWinterKeyItem(winterKeyItem):
     return generated
 
 
-if(__name__ == "__main__"):
+if (__name__ == "__main__"):
     main()
