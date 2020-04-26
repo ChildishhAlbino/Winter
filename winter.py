@@ -4,6 +4,7 @@ import json
 from re import compile
 words = []
 winterKeyRegex = "^([A-Za-z]{1}|[#]+|[\?]+)(\s{1}([A-Za-z]{1}|[#]+|[\?]+))*$"
+filteredCache = {}
 
 
 def generateLetterWildcard(winterKeyItem):
@@ -60,11 +61,26 @@ def getRandonWord(startingLetter=None, length=None):
     global words
     filtered = []
     if (startingLetter):
-        filtered = [word for word in words if word.startswith(
-            startingLetter.lower())]
+        cacheKey = "startsWith%s" % (startingLetter)
+        filtered = None
+        if (cacheKey in filteredCache.keys()):
+            filtered = filteredCache[cacheKey]
+        else:
+            filtered = [word for word in words if word.startswith(
+                startingLetter.lower())]
+            filteredCache[cacheKey] = filtered
+        potException = Exception(
+            "There were no words in the dictionary starting with %s" % (startingLetter))
     if (length):
-        filtered = [word for word in words if len(word) == length]
-    chosenWord = random.choice(filtered)
+        cacheKey = "lengthOf%s" % (length)
+        filtered = None
+        if (cacheKey in filteredCache.keys()):
+            filtered = filteredCache[cacheKey]
+        else:
+            filtered = [word for word in words if len(word) == length]
+            filteredCache[cacheKey] = filtered
+        potException = Exception(
+            "There were no words in the dictionary of length %s" % (length))
     if (startingLetter) and (startingLetter.isupper()):
         chosenWord = chosenWord.capitalize()
     return chosenWord
