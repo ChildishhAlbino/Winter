@@ -44,7 +44,7 @@ def parseWinterKey(winterKey):
         generatedItem = parseWinterKeyItem(winterKeyItem)
         generated.append(generatedItem)
     winterPassword = " ".join(generated)
-    pyperclip.copy(winterPasswordv)
+    pyperclip.copy(winterPassword)
     print(winterPassword)
 
 
