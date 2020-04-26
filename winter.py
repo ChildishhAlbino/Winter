@@ -3,6 +3,7 @@ import random
 import json
 
 words = []
+winterKeyRegex = "/^([A-Za-z]{1}|[#]+|[\?]+)(\s{1}([A-Za-z]{1}|[#]+|[\?]+))*$/"
 
 
 def generateLetterWildcard(winterKeyItem):
